@@ -7,6 +7,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.jungles.mazagaoauth.config.Config;
 
 public class Mazagao {
     public static boolean login(String username, String password){
@@ -18,7 +19,7 @@ public class Mazagao {
             json.addProperty("password", password);
             StringEntity entity = new StringEntity(json.toString(), ContentType.APPLICATION_JSON);
 
-            HttpPost httpPost = new HttpPost("http://192.168.1.90:8080/auth/playerSignIn");
+            HttpPost httpPost = new HttpPost(Config.API_ENDPOINT + "/auth/playerSignIn");
             httpPost.setEntity(entity);
 
             CloseableHttpClient httpclient = HttpClients.createDefault();
