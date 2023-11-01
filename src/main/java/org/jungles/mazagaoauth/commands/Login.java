@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jungles.mazagaoauth.manager.AuthManager;
 import org.jungles.mazagaoauth.serivices.Mazagao;
+import org.jungles.mazagaoauth.serivices.PlayerLocation;
 
 public class Login implements CommandExecutor {
 
@@ -42,10 +43,11 @@ public class Login implements CommandExecutor {
             @Override
             public void run() {
                 if (Mazagao.login(username, password)){
+                    PlayerLocation.teleportToLastLocation(player);
                     authManager.setAuthenticated(username);
                 }
             }
-        }.runTaskAsynchronously(plugin);
+        }.runTask(plugin);
 
         return true;
     }

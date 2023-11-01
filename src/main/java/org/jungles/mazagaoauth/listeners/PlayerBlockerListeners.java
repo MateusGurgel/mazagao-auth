@@ -19,13 +19,6 @@ public class PlayerBlockerListeners implements Listener {
 
     AuthManager authManager = AuthManager.getInstance();
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        Player player = e.getPlayer();
-        String name = player.getName();
-        authManager.clear(name);
-    }
-
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
