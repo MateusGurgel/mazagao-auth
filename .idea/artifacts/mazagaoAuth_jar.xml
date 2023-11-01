@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mazagaoAuth:jar">
+    <output-path>$USER_HOME$/Desktop/Mazagão/test-server/plugins</output-path>
+    <root id="archive" name="mazagaoAuth.jar">
+      <element id="module-output" name="mazagaoAuth" />
+    </root>
+  </artifact>
+</component>

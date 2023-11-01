@@ -1,0 +1,7 @@
+name: mazagaoAuth
+version: '${project.version}'
+main: org.jungles.mazagaoauth.MazagaoAuth
+api-version: '1.20'
+commands:
+  login:
+    description: log-in
