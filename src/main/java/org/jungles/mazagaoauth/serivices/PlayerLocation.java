@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +28,7 @@ public class PlayerLocation {
     }
 
     public static void teleportToLoginLocation(Player player){
-        player.teleport(new Location(player.getWorld(), 0, +200, 0));
+        player.teleport(new Location(player.getWorld(), 0, -200, 0));
     }
 
     public static void teleportToLastLocation(Player player){
@@ -37,6 +38,7 @@ public class PlayerLocation {
             player.teleport(player.getWorld().getSpawnLocation());
         }
 
+        player.setFallDistance(0);
         player.teleport(getLastLocation(player));
     }
 

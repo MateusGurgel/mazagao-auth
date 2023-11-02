@@ -1,6 +1,7 @@
 package org.jungles.mazagaoauth.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,6 +11,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jungles.mazagaoauth.manager.AuthManager;
 import org.jungles.mazagaoauth.serivices.Mazagao;
 import org.jungles.mazagaoauth.serivices.PlayerLocation;
+
+import static org.bukkit.Bukkit.getServer;
 
 public class Login implements CommandExecutor {
 
@@ -42,12 +45,21 @@ public class Login implements CommandExecutor {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (Mazagao.login(username, password)){
-                    PlayerLocation.teleportToLastLocation(player);
-                    authManager.setAuthenticated(username);
+                if (Mazagao.login(username, password))  {
+                    getServer().getScheduler().runTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            PlayerLocation.teleportToLastLocation(player);
+                            authManager.setAuthenticated(username);
+                        }
+                    });
+
+                }
+                else{
+                    player.sendMessage(ChatColor.RED + "Senha inválida");
                 }
             }
-        }.runTask(plugin);
+        }.runTaskAsynchronously(plugin);
 
         return true;
     }
