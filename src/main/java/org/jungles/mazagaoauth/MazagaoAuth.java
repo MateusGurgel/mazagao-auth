@@ -12,7 +12,7 @@ public final class MazagaoAuth extends JavaPlugin {
     public void onEnable() {
         System.out.println("### MazagãoAuth initialized ###");
 
-        getServer().getPluginManager().registerEvents( new PlayerBlockerListeners(), this);
+        getServer().getPluginManager().registerEvents( new PlayerBlockerListeners(this), this);
         getServer().getPluginManager().registerEvents( new AuthPlayerListeners(this), this);
         getServer().getPluginManager().registerEvents( new LocationRestorerListeners(), this);
 

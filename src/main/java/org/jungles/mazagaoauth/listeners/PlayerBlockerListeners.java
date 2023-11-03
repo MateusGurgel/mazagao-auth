@@ -13,10 +13,19 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.plugin.Plugin;
 import org.jungles.mazagaoauth.manager.AuthManager;
+import org.jungles.mazagaoauth.serivices.PlayerLocation;
+
+import static org.bukkit.Bukkit.getServer;
 
 public class PlayerBlockerListeners implements Listener {
 
+    public PlayerBlockerListeners(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    Plugin plugin;
     AuthManager authManager = AuthManager.getInstance();
 
     @EventHandler(priority = EventPriority.HIGH)

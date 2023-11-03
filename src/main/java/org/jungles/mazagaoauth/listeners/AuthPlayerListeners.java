@@ -5,10 +5,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.Plugin;
 import org.jungles.mazagaoauth.manager.AuthManager;
+import org.jungles.mazagaoauth.serivices.PlayerLocation;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -45,6 +48,27 @@ public class AuthPlayerListeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerQuit(PlayerQuitEvent e){
-        authManager.clear(e.getPlayer().getName());
+        Player player = e.getPlayer();
+
+        authManager.clear(player.getName());
+
+        if(player.isDead()){
+            PlayerLocation.setLastLocation(player ,player.getBedSpawnLocation());
+        }
     }
+
+    @EventHandler()
+    public void onPlayerRespawn(PlayerRespawnEvent e) {
+        String name = e.getPlayer().getName();
+
+        if (!authManager.isAuthenticated(name)) {
+            getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                public void run() {
+                    PlayerLocation.teleportToLoginLocation(e.getPlayer());
+                }
+            }, 1L);
+
+        }
+    }
+
 }

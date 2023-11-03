@@ -6,7 +6,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,10 +20,27 @@ public class PlayerLocation {
         persistentDataContainer.set(lastLocationKey, PersistentDataType.STRING, lastLocation.toString());
     }
 
+    public static void setLastLocation(Player player, Location lastLocation){
+
+        if(lastLocation == null){
+            lastLocation = player.getWorld().getSpawnLocation();
+        }
+
+        PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+        persistentDataContainer.set(lastLocationKey, PersistentDataType.STRING, lastLocation.toString());
+    }
+
     public static Location getLastLocation(Player player){
         PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
         String result = persistentDataContainer.get(lastLocationKey, PersistentDataType.STRING);
-        return stringToLocation(result);
+
+        Location lastLocation = stringToLocation(result);
+
+        if (lastLocation == null){
+            lastLocation = player.getWorld().getSpawnLocation();
+        }
+
+        return lastLocation;
     }
 
     public static void teleportToLoginLocation(Player player){
@@ -32,14 +48,11 @@ public class PlayerLocation {
     }
 
     public static void teleportToLastLocation(Player player){
+
         Location lastLocation = getLastLocation(player);
 
-        if (lastLocation == null){
-            player.teleport(player.getWorld().getSpawnLocation());
-        }
-
         player.setFallDistance(0);
-        player.teleport(getLastLocation(player));
+        player.teleport(lastLocation);
     }
 
     private static Location stringToLocation(String locationString) {
