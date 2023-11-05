@@ -57,6 +57,11 @@ public class PlayerLocation {
 
     private static Location stringToLocation(String locationString) {
 
+        if( locationString == null){
+            System.out.println("Invalid Location provided: null");
+            return null;
+        }
+
         Pattern pattern = Pattern.compile("Location\\{world=CraftWorld\\{name=(.*?)}," +
                 "x=(.*?),y=(.*?),z=(.*?),pitch=(.*?),yaw=(.*?)\\}");
 
